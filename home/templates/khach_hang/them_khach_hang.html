@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Thêm khách hàng{% endblock %}
+{% block style %} {% endblock %}
+
+{% block content %} 
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="row justify-content-center">
+    <h1 class="h3 mb-4 text-gray-800 text-center">Thêm khách hàng</h1>
+    
+    <form action="" method="post" class="was-validated col-6">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="uname">Mã khách hàng:</label>
+            <input type="text" class="form-control"  name="ma_khach_hang" placeholder="Nhập mã khách hàng" required>
+        </div>
+        <div class="form-group">
+            <label for="uname">Tên khách hàng:</label>
+            <input type="text" class="form-control"  name="ten_khach_hang" placeholder="Nhập tên khách hàng" required>
+        </div>
+        <div class="form-group">
+            <label for="uname">Địa chỉ khách hàng:</label>
+            <input type="text" class="form-control" name="dia_chi" placeholder="Nhập địa chỉ khách hàng" required >
+        <!-- data-eye-open-class="fa-toggle-off" data-eye-close-class="fa-toggle-on" -->
+    </div>
+    <div class="form-group">
+        <label for="uname">Số điện thoại:</label>
+        <input type="text" class="form-control" name="so_dien_thoai"  placeholder="Nhập số điện thoại" required>
+    </div>
+    <div class="form-group">
+        <label for="uname">Email:</label>
+        <input type="text" class="form-control" name="email"  placeholder="Nhập Email" required>
+    </div>
+    <div class="form-group">
+        <label for="uname">Ghi chú:</label>
+        <input type="text" class="form-control" name="note"  placeholder="Option">
+    </div>
+    <button type="submit" class="btn btn-primary" name="luu_thong_tin_khach_hang"><i class="fa fa-check"aria-hidden="true"></i>Lưu</button>
+    </div>
+</form>
+    
+    <!-- <input type="hidden" name="ma_hang_hoa" value = "{{hang.ma_hang_hoa}}"> -->
+
+</div>
+</div>
+    
+
+{% endblock %}

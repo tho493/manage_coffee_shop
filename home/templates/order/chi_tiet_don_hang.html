@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %} Chi tiết đơn hàng {% endblock %}
+
+{% block content %} 
+<div class="container mt-4">
+    <h2 class="mb-3">Các món đã đặt trong đơn hàng {{don_ban_hang.ma_don_hang}}</h2>
+        <div class="card-body">
+            <div class="table-responsive">
+            <table class="table table-striped" id="dataTable" width="80%" cellspacing="0">
+                <thead>
+                    <!-- <tr>
+                        <th>Ghi chú</th>
+                    </tr> -->
+                </thead>
+
+                <tbody>
+                    
+                    {% for ten_hang in array_don_hang %}
+                    <tr>
+                            <th> {{ten_hang}} </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

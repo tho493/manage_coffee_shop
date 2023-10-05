@@ -1,0 +1,8 @@
+{# {% if user.is_authenticated %}
+    <!-- Người dùng đã đăng nhập -->
+    <script>
+      window.location.href = '/home'
+    </script>
+    {% else %}
+    <!-- Người dùng chưa đăng nhập -->
+{% endif %} #}

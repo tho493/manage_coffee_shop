@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Thêm sản phẩm{% endblock %}
+{% block style %} {% endblock %}
+
+{% block content %} 
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="row justify-content-center">
+    <h1 class="h3 mb-4 text-gray-800 text-center">Thêm sản phẩm</h1>
+    
+    <form action="" method="post" enctype="multipart/form-data" class="was-validated col-6">
+        {% csrf_token %}
+        <!-- <div class="form-group">
+            <label for="uname">Mã sản phẩm:</label>
+            <input type="text" class="form-control"  name="ma_hang_hoa" placeholder="Nhập mã sản phẩm" required>
+        </div> -->
+    <div class="form-group">
+        <label for="uname">Tên sản phẩm:</label>
+        <input type="text" class="form-control"  name="ten_hang_hoa" placeholder="Nhập tên sản phẩm" required>
+    </div>
+    <div class="form-group">
+        <label for="uname">Giá sản phẩm:</label>
+        <input type="text" class="form-control" name="gia" placeholder="Nhập giá sản phẩm" required >
+        <!-- data-eye-open-class="fa-toggle-off" data-eye-close-class="fa-toggle-on" -->
+    </div>
+    <div class="form-group">
+        <label for="uname">Nhóm sản phẩm:</label>
+        <input type="text" class="form-control" name="nhom_hang_hoa"  placeholder="Nhập nhóm sản phẩm" required >
+    </div>
+    <div class="form-group">
+        <label for="uname">Hình ảnh sản phẩm:</label>
+        <input type="file" class="form-control" name="image" placeholder="Chọn ảnh sản phẩm" >
+    </div>
+    <button type="submit" class="btn btn-primary" name="tao_san_pham"><i class="fa fa-check"aria-hidden="true"></i>Thay đổi</button>
+    </div>
+</form>
+    
+    <!-- <input type="hidden" name="ma_hang_hoa" value = "{{hang.ma_hang_hoa}}"> -->
+
+</div>
+</div>
+    
+
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load reg %}
+{% block title %}Home{% endblock %}
+{% block style %}
+{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <form action="" method="post">
+        {% csrf_token %}
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+                    <!-- <div class="card shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                    <div class="font-weight-bold text-primary"> -->
+                                    <button class="form-control h-100 shadow btn text-success text-uppercase mb-1 border-left-success" type="submit" name="create_order">
+                                        Tạo đơn hàng </button>
+                                    <!-- </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Doanh thu tháng này</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{doanh_thu_thang|intt}}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Tổng doanh thu</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{tong_doanh_thu|intt}}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Pending Requests Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Tổng số đơn đang mở</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{tong_so_don}}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+    <hr style="border-top: 2px solid rgb(65, 176, 196);">
+
+
+    <div class="card-body">
+        <form action="" method="post">
+            <h2 class="text-center mb-3">Danh sách các bàn đang mở</h2>
+            {% csrf_token %}
+            <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="80%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã đơn hàng</th>
+                        <th>Người order</th>
+                        <th>Tổng tiền</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for don_hang in danh_sach_don_hang %}
+                    <tr>
+                            <th>
+                                <a href="{% url 'order' don_hang.ma_don_hang %}">{{don_hang.ma_don_hang}}</a>
+                            </th>
+                            <th>{{ don_hang.nguoi_order }}</th>
+                            <th>{{ don_hang.tong_tien|intt }}</th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+<!-- 
+    <div class="row">
+        <form action="" method="post">
+        <h2 class="text-center mb-3">Danh sách các bàn đang mở</h2>
+        <div class="container">
+            <div class="row display-6 text-gray-800 text-center">
+                <div class="col">Mã đơn hàng</div>
+                <div class="col">Người order</div>
+                <div class="col">Tổng tiền</div>
+            </div>
+            <div>
+            {% for don_hang in danh_sach_don_hang %}
+                {% csrf_token %}
+                <div class="row text-center">
+                    <a href="{% url 'order' don_hang.ma_don_hang %}" class="col btn border-0">{{don_hang.ma_don_hang}}</a>
+                    <div class="col">{{don_hang.nguoi_order}}</div>
+                    <div class="col">{{don_hang.tong_tien}}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </form>
+</div> -->
+
+{% endblock %}
+

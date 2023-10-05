@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load static %}
+{% load reg %}
+{% block title %} Thêm mới đơn hàng {% endblock %}
+{% block link %} 
+<!-- <link href="{% static 'static_order/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" /> -->
+<link href="{% static 'static_order/assets/css/core.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'static_order/assets/css/components.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'static_order/assets/css/icons.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'static_order/assets/css/responsive.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'static_order/assets/plugins/chosen/chosen.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'static_order/assets/plugins/daterangepicker/daterangepicker.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'static_order/assets/plugins/dataTables/jquery.dataTables.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'static_order/assets/plugins/dataTables/dataTables.bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'static_order/assets/css/pages.css' %}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="{% static '/static_order/assets/css/notiflix-2.4.0.min.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div id="pos_view"  style="padding: 10px 10px 10px 10px;">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card-box" style="padding: 30px;border-radius: 35px;">
+                <form action="" method="post">
+                <div class="row">
+                    <div class="col-md-9">
+                        <input type="text" id="search" name="search_product" class="form-control"
+                            placeholder="Tìm sản phẩm theo tên/nhóm sp">
+                        </div>
+                        <button class="form-control col-md-2" type="submit" name = "btn_search">Search</button>
+                    <!-- <div class="col-md-8">
+                        <div class="" id="categories"></div>
+                    </div> -->
+                </div>
+                <hr>
+                <div class="row" id="parent" style="overflow: auto">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{id_order}}" name="id_order">
+                    {% for i in nhom_san_pham %}
+                        <h4>{{i.nhom_hang_hoa}}</h4>
+
+                        {% for item in danh_sach_san_pham %}
+                            {% if item.nhom_hang_hoa == i.nhom_hang_hoa %}
+                            <button type="submit" name="btn_order{{item.ma_hang_hoa}}" class="btn btn-primary" style="width: 130px;height: 130px; margin: 12px 12px !important; background-image: url('{{item.image.url}}'); background-size: cover; position: relative; background-repeat: no-repeat;">
+                                {% comment %} <span style="position: absolute; bottom: 0; font-size: 20px; font-weight: bold; color: blue;">{{item.ten_hang_hoa}}</span> {% endcomment %}
+                                <span style="font-size: 20px; font-weight: bold;position: absolute; bottom: 0;text-shadow: 2px 2px 4px rgb(0, 0, 0.5);">{{item.ten_hang_hoa}}</span>
+                            </button>
+                            {% endif %}
+                            {% endfor %}
+
+                    {% endfor %}
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card-box" id="card-box"  style="padding: 30px;border-radius: 35px;">
+
+                <div>
+                    <table class="table" id="cartTable">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{id_order}}" name="id_order">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th width="150px">Sản phẩm</th>
+                                    <th width="170px">Số lượng</th>
+                                    <th>Giá</th>
+                                    <th width="5px">
+                                        <button type="submit" name="delete_all_item" class="btn btn-danger btn-xs"><i
+                                                class="fa fa-times"></i></button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order  %}
+                                <tr>
+                                    <th>{{forloop.counter}}</th>
+                                    <th>{{item.hang_hoa.ten_hang_hoa}}</th>
+                                    <th>
+                                        <input stype="width: 5px" type="number" name="so_luong{{item.hang_hoa.ma_hang_hoa}}" value="{{item.so_luong}}" min="1" max="100"/>
+                                    </th>
+                                    <th width="3px">
+                                        <button type="submit" name="update_so_luong{{item.hang_hoa.ma_hang_hoa}}" class="btn btn-primary btn-xs"> </button>
+                                    </th>
+                                    <th>{{ item.hang_hoa.gia|multiply:item.so_luong|intt }}</th>
+                                    <th width="5px">
+                                        <button type="submit" name="delete_item{{item.hang_hoa.ma_hang_hoa}}" class="btn btn-danger btn-xs"><i
+                                                class="fa fa-times"></i></button>
+                                    </th>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </form>
+
+                    </table>
+                </div>
+
+                <hr>
+
+                <div class="row ">
+                    <!-- <div class="col-md-3 h3" style="display: none;">Total Item(s)</div>
+                    <div class="col-md-3 h3" style="display: none;">: <sapn id="total">0</sapn>
+                    </div> -->
+                    <div class="col-md-6 h2">Thành tiền :</div>
+                    <div class="col-md-6 h2"> <span id="price">{{ don_ban_hang.tong_tien|intt }}</span></div>
+                </div>
+                <!-- <div class="row">
+                        <div class="col-md-3">Discount</div>
+                        <div class="col-md-3"><input class="form-control" type="number" id="inputDiscount"
+                                oninput="$(this).calculateCart();"></div>
+                        <div class="col-md-3">Gross Price (inc <span id="taxInfo"></span>% Tax)</div>
+                        <div class="col-md-3">
+                            <h3 id="gross_price">0.00</h3>
+                        </div>
+                    </div>
+-->
+
+
+                <div class="row m-t-10 px-1 ">
+                    <div class="custom-row">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{id_order}}" name="id_order">
+                            <!-- <button onclick="$(this).submitDueOrder(3);" type="button"
+                                class="btn btn-info waves-effect waves-light custom-btn">
+                                <i class="fa fa-print"></i>
+                            </button> -->
+    
+                            <button  type="submit" name="cancel_order"
+                                class="btn btn-danger waves-effect waves-light custom-btn">
+                                <span class="btn-label"><i class="fa fa-ban"></i></span>Hủy
+                            </button>
+    
+                            <button type="submit" name="thanh_toan" id="payButton"
+                                class="btn btn-success waves-effect waves-light custom-btn">
+                                <span class="btn-label"><i class="fa fa-money"></i></span>Thanh toán
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<!-- </div> -->
+
+{% endblock %}

@@ -1,0 +1,49 @@
+
+{% extends "base.html" %}
+
+{% block title %}Quản lý khách hàng{% endblock %}
+{% block style %} {% endblock %}
+
+{% block content %} 
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <!-- Page Heading -->
+        
+        <form action="" method="post" class="was-validated col-6">
+            {% csrf_token %}
+            <h1 class="h3 mb-4 text-gray-800 text-center">Sửa thông tin khách hàng</h1>
+            <div class="form-group">
+                <label for="uname">Mã khách hàng:</label>
+                <input type="text" class="form-control"  name="ma_khach_hang" placeholder="Nhập tên khách hàng" value = "{{khach.ma_khach_hang}}" disabled>
+            </div>
+            <div class="form-group">
+                <label for="uname">Tên khách hàng:</label>
+                <input type="text" class="form-control"  name="ten_khach_hang" placeholder="Nhập tên khách hàng" value = "{{khach.ten_khach_hang}}" required>
+            </div>
+            <div class="form-group">
+                <label for="uname">Địa chỉ khách hàng:</label>
+                <input type="text" class="form-control" name="gia" placeholder="Nhập địa chỉ khách hàng" value = "{{khach.dia_chi}}" required >
+            <!-- data-eye-open-class="fa-toggle-off" data-eye-close-class="fa-toggle-on" -->
+        </div>
+        <div class="form-group">
+            <label for="uname">Số điện thoại:</label>
+            <input type="text" class="form-control" name="nhom_hang_hoa"  placeholder="Nhập số điện thoại" value = "{{khach.so_dien_thoai}}" required>
+        </div>
+        <div class="form-group">
+            <label for="uname">Email:</label>
+            <input type="text" class="form-control" name="nhom_hang_hoa"  placeholder="Nhập Email" value = "{{khach.email}}" required>
+        </div>
+        <div class="form-group">
+            <label for="uname">Ghi chú:</label>
+            <input type="text" class="form-control" name="nhom_hang_hoa"  placeholder="Nhập ghi chú" value = "{{khach.note}}">
+        </div>
+        <input type="hidden" name="ma_khach_hang" value = "{{khach.ma_khach_hang}}">
+        <button type="submit" class="btn btn-primary btn-lg" name="luu_thong_tin_khach_hang"><i class="fa fa-check"aria-hidden="true"></i>Thay đổi</button>
+    </div>
+    </form>
+</div>
+    
+
+{% endblock %}
+

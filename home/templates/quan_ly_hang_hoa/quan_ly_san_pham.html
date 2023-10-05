@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Quản lý sản phẩm{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="card-body">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="80%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Hình ảnh sản phẩm</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    
+                    {% for hang in HangHoas %}
+                    <tr>
+                            <th>{{ hang.ma_hang_hoa }}</th>
+                            <th>{{ hang.ten_hang_hoa }}</th>
+                            <th>{{ hang.gia }}</th>
+                            <th>
+                                <img style="width: 130px; height: 130px" src="{{ hang.image.url }}">
+                            </th>
+                        <td>
+                        <input type="hidden" value="{{ hang.ma_hang_hoa }}" name="ma_hang_hoa">
+                        <button  type="submit" name="edit_hang_hoa"  class="btn btn-primary"><i class="fas fa-edit"></i></button>
+                        <button type="submit" name="delete_hang_hoa" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+{% if not HangHoas %}
+<h2 class="table text-center text-gray-600" >Không tìm thấy sản phẩm</h2>
+{% endif %}
+<!-- 
+<div class="card-footer">
+<a href="add_user.php" class="btn btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm</a>
+</div> -->
+    
+
+</div>
+        
+    </div>
+{% endblock %}

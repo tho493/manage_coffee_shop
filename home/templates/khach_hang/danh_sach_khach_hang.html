@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %} Danh sách khách hàng {% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Danh sách khách hàng</h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="card-body">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="80%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã khách hàng</th>
+                        <th>Tên khách hàng</th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Email</th>
+                        <th>Ghi chú</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    
+                    {% for khach in KhachHangs %}
+                    <tr>
+                            <th>{{ khach.ma_khach_hang }}</th>
+                            <th>{{ khach.ten_khach_hang }}</th>
+                            <th>{{ khach.dia_chi }}</th>
+                            <th>{{ khach.so_dien_thoai }}</th>
+                            <th>{{ khach.email }}</th>
+                            <th>{{ khach.note }}</th>
+                        <td>
+                        <input type="hidden" value="{{ khach.ma_khach_hang }}" name="ma_khach_hang">
+                        <button  type="submit" name="edit_khach_hang"  class="btn btn-primary"><i class="fas fa-edit"></i></button>
+                        <button type="submit" name="delete_khach_hang" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+{% if not KhachHangs %}
+<h2 class="table text-center text-gray-600" >Không tìm thấy khách hàng</h2>
+{% endif %}
+<!-- 
+<div class="card-footer">
+<a href="add_user.php" class="btn btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm</a>
+</div> -->
+    
+
+</div>
+{% endblock %}

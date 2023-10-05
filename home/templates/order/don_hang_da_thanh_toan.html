@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load reg %}
+{% block title %} Danh sách các đơn hàng đã thanh toán {% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Danh sách các đơn hàng đã thanh toán</h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="card-body">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="table-responsive">
+            <table class="table table-striped" id="dataTable" width="80%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã đơn hàng</th>
+                        <th>Người order</th>
+                        <th>Ngày bán</th>
+                        <th>Các món đã đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>Ghi chú</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    
+                    {% for hang in page_obj %}
+                    <tr>
+                            <th>
+                                <a href="{% url 'chi_tiet_don_hang' hang.ma_don_hang %}">{{ hang.ma_don_hang }}</a>
+                            </th>
+                            <th>{{ hang.nguoi_order }}</th>
+                            <th>{{ hang.ngay_ban }}</th>
+                            {% for hang_hoa in arr %}
+                                {% for ma_don_hang, str_hang_hoa in hang_hoa.items %}
+                                    {% if ma_don_hang == hang.ma_don_hang %}
+                                        <th>{{str_hang_hoa}}</th>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                            <th>{{ hang.tong_tien|intt }}</th>
+                            <th> {{hang.ghi_chu}} </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+    </form>
+    <nav aria-label="Page navigation example">
+        <div class="row">
+                <ul class="pagination col-md-10 ms-auto">
+                {% if page_obj.has_previous %}
+                    <li>
+                        <a class="page-link" href="{{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+                    {% for i in page_numbers %}
+                    <li class="page-item"><a class="page-link" href="{{ i }}">{{ i }}</a></li>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="{{ page_obj.next_page_number }}">Next</a></li>
+                    {% endif %}
+                </ul>
+                <div class="col-md-2">
+                    <span class="current step-links">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                </div>
+            </div>
+        </nav>
+</div>
+{% if not page_obj %}
+<h2 class="table text-center text-gray-600" >Không tìm thấy đơn hàng nào</h2>
+{% endif %}
+</div>
+</div>
+{% endblock %}
